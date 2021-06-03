@@ -16,6 +16,16 @@ namespace GovAPI
 
         public DateTime? TimeStamp { get; set; }
 
+
+        public int? TotalAddNewRow { get; set; }
+
+        public int? TotalChange1 { get; set; }
+
+        public int? TotalChange2 { get; set; }
+
+
+
+
     }
 
 }
