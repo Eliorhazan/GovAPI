@@ -17,10 +17,10 @@ using System.Threading.Tasks;
 
 namespace GovAPI
 {
-    class Mot4weelAPI
+    class MotRecallAPI
     {
 
-        public static List<MOT4Wheels> DbMOT4WheelsList;
+        public static List<MOTRecall> DbMOTRecallList;
 
         public static int TotalRowOver = 0;
 
@@ -40,19 +40,19 @@ namespace GovAPI
 
 
                     // אם קיים קישור בקונפיג
-                    string CsvLink = ConfigurationManager.AppSettings.Get("Mot4wheels");
+                    string CsvLink = ConfigurationManager.AppSettings.Get("MOTRecall");
 
                     // כל הטבלה הקיימת כרגע
-                    DbMOT4WheelsList = Context.MOT4Wheels.AsNoTracking().ToList();
+                    DbMOTRecallList = Context.MOTRecall.AsNoTracking().ToList();
 
                     // מגיע מcsv  
                     if (!string.IsNullOrEmpty(CsvLink))
                     {
 
                         Logs log = new Logs();
-                        log.TableName = "MOT4Wheels";
+                        log.TableName = "MOTRecall";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOT4Wheels from csv";
+                        log.ActionName = " Start Download MOTRecall from csv";
 
                         Context.Logs.Add(log);
 
@@ -80,9 +80,9 @@ namespace GovAPI
                                 {
 
                                     string[] csvArray = inputLine.Split(new char[] { '|' });
-                                    MOT4Wheels MOT4WheelsFromCsv = GetMOT4WheelsObj(csvArray, colHeader);
+                                    MOTRecall MOTRecallFromCsv = GetMOTRecallObj(csvArray, colHeader);
 
-                                    DBDeltaCheck(Context, MOT4WheelsFromCsv);
+                                    DBDeltaCheck(Context, MOTRecallFromCsv);
                                   
 
                                 }
@@ -107,9 +107,9 @@ namespace GovAPI
                     else
                     {
                         Logs log = new Logs();
-                        log.TableName = "MOT4Wheels";
+                        log.TableName = "MOTRecall";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOT4Wheels from gov...";
+                        log.ActionName = " Start Download MOTRecall from gov...";
 
                         Context.Logs.Add(log);
 
@@ -119,7 +119,7 @@ namespace GovAPI
                         string requestParams = string.Empty;
 
                         // Converting Request Params to Key Value Pair.  
-                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "053cea08-09bc-40ec-8f7a-156f0677aff3"));
+                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "2c33523f-87aa-44ec-a736-edbb0a82975e"));
                         allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
@@ -150,7 +150,7 @@ namespace GovAPI
                 catch (Exception ex)
                 {
                     Logs log = new Logs();
-                    log.TableName = "MOT4Wheels";
+                    log.TableName = "MOTRecall";
                     log.TimeStamp = DateTime.Now;
                     log.ActionName = "Exception";
                     log.Exeption = ex.Message;
@@ -164,9 +164,9 @@ namespace GovAPI
                 {
 
                     Logs log = new Logs();
-                    log.TableName = "MOT4Wheels";
+                    log.TableName = "MOTRecall";
                     log.TimeStamp = DateTime.Now;
-                    log.ActionName = " End Download MOT4Wheels";
+                    log.ActionName = " End Download MOTRecall";
 
                     log.TotalAddNewRow = TotalAddNewCar;
                     log.TotalChange1 = TotalChangeBaalut;
@@ -187,12 +187,12 @@ namespace GovAPI
 
         }
 
-       public MOT4Wheels MOT4WheelsFromCsvTemp = new MOT4Wheels();
+       public MOTRecall MOTRecallFromCsvTemp = new MOTRecall();
 
-        private MOT4Wheels GetMOT4WheelsObj(string[] csvArray, string[] colHeader)
+        private MOTRecall GetMOTRecallObj(string[] csvArray, string[] colHeader)
         {
 
-            MOT4Wheels MOT4WheelsFromCsv = MOT4WheelsFromCsvTemp;
+            MOTRecall MOTRecallFromCsv = MOTRecallFromCsvTemp;
 
             for (int i = 0; i < colHeader.Length; i++)
             {
@@ -200,15 +200,15 @@ namespace GovAPI
 
                 try
                 {
-                    var PropTypeName = Helper.GetTypeOfEntity(MOT4WheelsFromCsv, colHeader[i].ToString());
+                    var PropTypeName = Helper.GetTypeOfEntity(MOTRecallFromCsv, colHeader[i].ToString());
 
                     if (PropTypeName == "Int32")
-                        MOT4WheelsFromCsv[colHeader[i].ToString()] = Helper.ConvertToInt(csvArray[i]);
+                        MOTRecallFromCsv[colHeader[i].ToString()] = Helper.ConvertToInt(csvArray[i]);
                     else if (PropTypeName == "Nullable`1")
-                        MOT4WheelsFromCsv[colHeader[i].ToString()] = Helper.ConvertToDatetime(csvArray[i]);
+                        MOTRecallFromCsv[colHeader[i].ToString()] = Helper.ConvertToDatetime(csvArray[i]);
 
                     else
-                        MOT4WheelsFromCsv[colHeader[i].ToString()] = csvArray[i].Replace("\"", "");
+                        MOTRecallFromCsv[colHeader[i].ToString()] = csvArray[i].Replace("\"", "");
 
                 }
                 catch (Exception ex)
@@ -220,7 +220,7 @@ namespace GovAPI
                 // }
             }
 
-            //MOT4Wheels MOT4WheelsFromCsv = new MOT4Wheels()
+            //MOTRecall MOTRecallFromCsv = new MOTRecall()
             //{
 
             //        mispar_rechev = Helper.ConvertToInt(csvArray[0]),
@@ -252,7 +252,7 @@ namespace GovAPI
 
 
 
-            return MOT4WheelsFromCsv;
+            return MOTRecallFromCsv;
         }
 
         public static async Task<int> GetInfo(string requestParams, Context Context)
@@ -288,9 +288,9 @@ namespace GovAPI
                     {
 
 
-                        MOT4Wheels MOT4WheelsFromGov = JsonConvert.DeserializeObject<MOT4Wheels>(x.ToString());
+                        MOTRecall MOTRecallFromGov = JsonConvert.DeserializeObject<MOTRecall>(x.ToString());
 
-                        DBDeltaCheck(Context, MOT4WheelsFromGov);
+                        DBDeltaCheck(Context, MOTRecallFromGov);
 
                         CountScan++;
 
@@ -305,73 +305,21 @@ namespace GovAPI
 
         }
 
-        private static void DBDeltaCheck(Context Context, MOT4Wheels MOT4WheelsObj)
+        private static void DBDeltaCheck(Context Context, MOTRecall MOTRecallObj)
         {
 
             TotalRowOver++;
 
-            var CurrentCarInDB = DbMOT4WheelsList.Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+            var CurrentCarInDB = DbMOTRecallList.Where(m => m.RECALL_ID == MOTRecallObj.RECALL_ID).FirstOrDefault();
 
             //רכב חדש
             if (CurrentCarInDB == null)
             {
-                Context.MOT4Wheels.Add(MOT4WheelsObj);
+                Context.MOTRecall.Add(MOTRecallObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOT4WheelsObj.mispar_rechev);
+                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTRecallObj.RECALL_ID);
             }
-            else
-            {
-
-                if (MOT4WheelsObj.baalut != CurrentCarInDB.baalut)
-                {
-
-                    CarHoldingHistory ch = new CarHoldingHistory()
-                    {
-                        mispar_rechev = CurrentCarInDB.mispar_rechev,
-                        baalut = CurrentCarInDB.baalut,
-                        LastScanDate = DateTime.Now
-                    };
-
-                    Context.CarHoldingHistory.Add(ch);
-
-
-                    // עדכון בעלות לחדש
-                    CurrentCarInDB.baalut = MOT4WheelsObj.baalut;
-                    Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-
-                    TotalChangeBaalut++;
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " Change Baalut - " + MOT4WheelsObj.mispar_rechev);
-
-                }
-
-
-                if (MOT4WheelsObj.tokef_dt != CurrentCarInDB.tokef_dt)
-                {
-
-
-                    CarHoldingHistory ch = new CarHoldingHistory()
-                    {
-                        tokef_dt = CurrentCarInDB.tokef_dt,
-                        mivchan_acharon_dt = CurrentCarInDB.mivchan_acharon_dt,
-                        LastScanDate = DateTime.Now
-                    };
-
-                    Context.CarHoldingHistory.Add(ch);
-
-
-                    // עדכון תוקף לחדש
-                    CurrentCarInDB.tokef_dt = MOT4WheelsObj.tokef_dt;
-                    CurrentCarInDB.mivchan_acharon_dt = MOT4WheelsObj.mivchan_acharon_dt;
-                    Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-
-                    TotalChangeTokefDate++;
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " Change TokefDate - " + MOT4WheelsObj.mispar_rechev);
-
-
-                }
-
-            }
-
+         
 
             Context.SaveChanges();
             

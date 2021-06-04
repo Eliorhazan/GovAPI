@@ -10,6 +10,8 @@ namespace GovAPI
         public  DbSet<MOT4Wheels> MOT4Wheels { get; set; }
         public  DbSet<MOTModels> MOTModels { get; set; }
         public  DbSet<MOTRecall> MOTRecall { get; set; }
+
+        public DbSet<MOTRecallNoArrive> MOTRecallNoArrive { get; set; }
         public  DbSet<MOTTags> MOTTags { get; set; }
 
         public DbSet<CarHoldingHistory> CarHoldingHistory { get; set; }
@@ -17,8 +19,10 @@ namespace GovAPI
 
         public DbSet<Logs> Logs { get; set; }
 
+        public DbSet<MOTCancel> MOTCancel { get; set; }
 
-        
+
+
 
         public Context() : base("BalcarDB") { }
 

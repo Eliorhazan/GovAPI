@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,6 +48,33 @@ namespace GovAPI
                 return res;
         }
 
+        public static string GetTypeOfEntity(object data,string PropertyName)
+        {
 
-    }
+        
+
+            string TypeOF = data.GetType().GetProperties().Where(x=>x.Name== PropertyName).FirstOrDefault().PropertyType.Name;
+
+            //foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+            //{
+            //    string res = propertyInfo.GetType().Name;
+
+
+
+            //    //if (propertyInfo.PropertyType == typeof(string))
+            //    //{
+            //    //    string value = propertyInfo.GetValue(data, null);
+
+
+            //    //}
+            //}
+
+
+            return TypeOF;
+        }            
+
+    
+
+
+}
 }
