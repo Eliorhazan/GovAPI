@@ -7,8 +7,18 @@ namespace GovAPI
     public partial class MOTTags
     {
         public int Id { get; set; }
-        public double? MISPAR_RECHEV { get; set; }
-        public double? TAARICH_HAFAKAT_TAG { get; set; }
-        public double? SUG_TAV { get; set; }
+
+        [Column("MISPAR RECHEV")]
+        public int MISPAR_RECHEV { get; set; }
+        [Column("TAARICH HAFAKAT TAG")]
+        public string TAARICH_HAFAKAT_TAG { get; set; }
+        [Column("SUG TAV")]
+        public string SUG_TAV { get; set; }
+
+        public object this[string propertyName]
+        {
+            get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }
+            set { this.GetType().GetProperty(propertyName).SetValue(this, value, null); }
+        }
     }
 }

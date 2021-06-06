@@ -17,10 +17,10 @@ using System.Threading.Tasks;
 
 namespace GovAPI
 {
-    class MOTRecallNoArriveAPI
+    class MotModelAPI
     {
 
-        public static List<MOTRecallNoArrive> DbMOTRecallNoArriveList;
+        public static List<MOTModels> DbMOTModelsList;
 
         public static int TotalRowOver = 0;
 
@@ -40,19 +40,19 @@ namespace GovAPI
 
 
                     // אם קיים קישור בקונפיג
-                    string CsvLink = ConfigurationManager.AppSettings.Get("MOTRecallNoArrive");
+                    string CsvLink = ConfigurationManager.AppSettings.Get("MOTModels");
 
                     // כל הטבלה הקיימת כרגע
-                    DbMOTRecallNoArriveList = Context.MOTRecallNoArrive.AsNoTracking().ToList();
+                    DbMOTModelsList = Context.MOTModels.AsNoTracking().ToList();
 
                     // מגיע מcsv  
                     if (!string.IsNullOrEmpty(CsvLink))
                     {
 
                         Logs log = new Logs();
-                        log.TableName = "MOTRecallNoArrive";
+                        log.TableName = "MOTModels";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOTRecallNoArrive from csv";
+                        log.ActionName = " Start Download MOTModels from csv";
 
                         Context.Logs.Add(log);
 
@@ -80,9 +80,9 @@ namespace GovAPI
                                 {
 
                                     string[] csvArray = inputLine.Split(new char[] { '|' });
-                                    MOTRecallNoArrive MOTRecallNoArriveFromCsv = GetMOTRecallNoArriveObj(csvArray, colHeader);
+                                    MOTModels MOTModelsFromCsv = GetMOTModelsObj(csvArray, colHeader);
 
-                                    DBDeltaCheck(Context, MOTRecallNoArriveFromCsv);
+                                    DBDeltaCheck(Context, MOTModelsFromCsv);
                                   
 
                                 }
@@ -106,16 +106,10 @@ namespace GovAPI
                     // הורדה מגוב
                     else
                     {
-
-                        var All = Context.MOTRecallNoArrive;
-                        Context.MOTRecallNoArrive.RemoveRange(All);
-                        Context.SaveChanges();
-
-
                         Logs log = new Logs();
-                        log.TableName = "MOTRecallNoArrive";
+                        log.TableName = "MOTModels";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOTRecallNoArrive from gov...";
+                        log.ActionName = " Start Download MOTModels from gov...";
 
                         Context.Logs.Add(log);
 
@@ -125,7 +119,7 @@ namespace GovAPI
                         string requestParams = string.Empty;
 
                         // Converting Request Params to Key Value Pair.  
-                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "36bf1404-0be4-49d2-82dc-2f1ead4a8b93"));
+                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "142afde2-6228-49f9-8a29-9b6c3a0cbe40"));
                         allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
@@ -156,7 +150,7 @@ namespace GovAPI
                 catch (Exception ex)
                 {
                     Logs log = new Logs();
-                    log.TableName = "MOTRecallNoArrive";
+                    log.TableName = "MOTModels";
                     log.TimeStamp = DateTime.Now;
                     log.ActionName = "Exception";
                     log.Exeption = ex.Message;
@@ -170,9 +164,9 @@ namespace GovAPI
                 {
 
                     Logs log = new Logs();
-                    log.TableName = "MOTRecallNoArrive";
+                    log.TableName = "MOTModels";
                     log.TimeStamp = DateTime.Now;
-                    log.ActionName = " End Download MOTRecallNoArrive";
+                    log.ActionName = " End Download MOTModels";
 
                     log.TotalAddNewRow = TotalAddNewCar;
                     log.TotalChange1 = TotalChangeBaalut;
@@ -193,12 +187,12 @@ namespace GovAPI
 
         }
 
-       public MOTRecallNoArrive MOTRecallNoArriveFromCsvTemp = new MOTRecallNoArrive();
+       public MOTModels MOTModelsFromCsvTemp = new MOTModels();
 
-        private MOTRecallNoArrive GetMOTRecallNoArriveObj(string[] csvArray, string[] colHeader)
+        private MOTModels GetMOTModelsObj(string[] csvArray, string[] colHeader)
         {
 
-            MOTRecallNoArrive MOTRecallNoArriveFromCsv = MOTRecallNoArriveFromCsvTemp;
+            MOTModels MOTModelsFromCsv = MOTModelsFromCsvTemp;
 
             for (int i = 0; i < colHeader.Length; i++)
             {
@@ -206,15 +200,15 @@ namespace GovAPI
 
                 try
                 {
-                    var PropTypeName = Helper.GetTypeOfEntity(MOTRecallNoArriveFromCsv, colHeader[i].ToString());
+                    var PropTypeName = Helper.GetTypeOfEntity(MOTModelsFromCsv, colHeader[i].ToString());
 
                     if (PropTypeName == "Int32")
-                        MOTRecallNoArriveFromCsv[colHeader[i].ToString()] = Helper.ConvertToInt(csvArray[i]);
+                        MOTModelsFromCsv[colHeader[i].ToString()] = Helper.ConvertToInt(csvArray[i]);
                     else if (PropTypeName == "Nullable`1")
-                        MOTRecallNoArriveFromCsv[colHeader[i].ToString()] = Helper.ConvertToDatetime(csvArray[i]);
+                        MOTModelsFromCsv[colHeader[i].ToString()] = Helper.ConvertToDatetime(csvArray[i]);
 
                     else
-                        MOTRecallNoArriveFromCsv[colHeader[i].ToString()] = csvArray[i].Replace("\"", "");
+                        MOTModelsFromCsv[colHeader[i].ToString()] = csvArray[i].Replace("\"", "");
 
                 }
                 catch (Exception ex)
@@ -226,7 +220,7 @@ namespace GovAPI
                 // }
             }
 
-            //MOTRecallNoArrive MOTRecallNoArriveFromCsv = new MOTRecallNoArrive()
+            //MOTModels MOTModelsFromCsv = new MOTModels()
             //{
 
             //        mispar_rechev = Helper.ConvertToInt(csvArray[0]),
@@ -258,7 +252,7 @@ namespace GovAPI
 
 
 
-            return MOTRecallNoArriveFromCsv;
+            return MOTModelsFromCsv;
         }
 
         public static async Task<int> GetInfo(string requestParams, Context Context)
@@ -294,9 +288,9 @@ namespace GovAPI
                     {
 
 
-                        MOTRecallNoArrive MOTRecallNoArriveFromGov = JsonConvert.DeserializeObject<MOTRecallNoArrive>(x.ToString());
+                        MOTModels MOTModelsFromGov = JsonConvert.DeserializeObject<MOTModels>(x.ToString());
 
-                        DBDeltaCheck(Context, MOTRecallNoArriveFromGov);
+                        DBDeltaCheck(Context, MOTModelsFromGov);
 
                         CountScan++;
 
@@ -311,23 +305,24 @@ namespace GovAPI
 
         }
 
-        private static void DBDeltaCheck(Context Context, MOTRecallNoArrive MOTRecallNoArriveObj)
+        private static void DBDeltaCheck(Context Context, MOTModels MOTModelsObj)
         {
 
             TotalRowOver++;
 
-         //   var CurrentCarInDB = DbMOTRecallNoArriveList.Where(m => m.RECALL_ID == MOTRecallNoArriveObj.RECALL_ID).FirstOrDefault();
+            var CurrentCarInDB = DbMOTModelsList.Where(m => m.tozeret_nm == MOTModelsObj.tozeret_nm && m.degem_nm == MOTModelsObj.degem_nm && m.shnat_yitzur == MOTModelsObj.shnat_yitzur).FirstOrDefault();
 
             //רכב חדש
-            //if (CurrentCarInDB == null)
-            //{
-                Context.MOTRecallNoArrive.Add(MOTRecallNoArriveObj);
+            if (CurrentCarInDB == null)
+            {
+                Context.MOTModels.Add(MOTModelsObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTRecallNoArriveObj.RECALL_ID);
-           // }
-         
+                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTModelsObj.tozeret_nm);
+            }
 
-           // Context.SaveChanges();
+
+
+            Context.SaveChanges();
             
         }
     }

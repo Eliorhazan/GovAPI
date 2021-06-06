@@ -94,5 +94,11 @@ namespace GovAPI
         public string NOX_WLTP { get; set; }
         public string CO_WLTP { get; set; }
         public string CO2_WLTP_NEDC { get; set; }
+
+        public object this[string propertyName]
+        {
+            get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }
+            set { this.GetType().GetProperty(propertyName).SetValue(this, value, null); }
+        }
     }
 }

@@ -20,7 +20,13 @@ namespace GovAPI
             //MotRecallAPI ma = new MotRecallAPI();
             //ma.RunAPI();
 
-            MOTRecallNoArriveAPI ma = new MOTRecallNoArriveAPI();
+            //MOTRecallNoArriveAPI ma = new MOTRecallNoArriveAPI();
+            //ma.RunAPI();
+
+            //MotModelAPI ma = new MotModelAPI();
+            //ma.RunAPI();
+
+            MotTagAPI ma = new MotTagAPI();
             ma.RunAPI();
 
 
