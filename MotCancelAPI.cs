@@ -286,11 +286,13 @@ namespace GovAPI
                 Context.MOTCancel.Add(MOT4WheelsObj);
                 TotalAddNewCar++;
                 Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOT4WheelsObj.mispar_rechev);
+
+                Context.SaveChanges();
             }
            
 
 
-            Context.SaveChanges();
+          
             
         }
     }

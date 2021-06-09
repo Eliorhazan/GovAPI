@@ -11,8 +11,8 @@ namespace GovAPI
         static void Main(string[] args)
         {
 
-            //Mot4weelAPI ma = new Mot4weelAPI();
-            //ma.RunAPI();
+            Mot4weelAPI ma = new Mot4weelAPI();
+            ma.RunAPI();
 
             //MotCancelAPI ma = new MotCancelAPI();
             //ma.RunAPI();
@@ -26,8 +26,8 @@ namespace GovAPI
             //MotModelAPI ma = new MotModelAPI();
             //ma.RunAPI();
 
-            MotTagAPI ma = new MotTagAPI();
-            ma.RunAPI();
+            //MotTagAPI ma = new MotTagAPI();
+            //ma.RunAPI();
 
 
             Console.WriteLine("Stay Open");
