@@ -97,6 +97,7 @@
     <Compile Include="Models\MOTRecallNoArrive.cs" />
     <Compile Include="Models\MOTRecall.cs" />
     <Compile Include="Models\MOTTags.cs" />
+    <Compile Include="MotDealerAPI.cs" />
     <Compile Include="MotTagAPI.cs" />
     <Compile Include="MotModelAPI.cs" />
     <Compile Include="MotRecallNoArriveAPI.cs" />

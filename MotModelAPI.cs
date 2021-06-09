@@ -318,11 +318,12 @@ namespace GovAPI
                 Context.MOTModels.Add(MOTModelsObj);
                 TotalAddNewCar++;
                 Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTModelsObj.tozeret_nm);
+                Context.SaveChanges();
             }
 
 
 
-            Context.SaveChanges();
+           
             
         }
     }

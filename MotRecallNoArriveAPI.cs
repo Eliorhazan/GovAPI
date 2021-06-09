@@ -316,19 +316,20 @@ namespace GovAPI
 
             TotalRowOver++;
 
-         //   var CurrentCarInDB = DbMOTRecallNoArriveList.Where(m => m.RECALL_ID == MOTRecallNoArriveObj.RECALL_ID).FirstOrDefault();
+            var CurrentCarInDB = DbMOTRecallNoArriveList.Where(m => m.RECALL_ID == MOTRecallNoArriveObj.RECALL_ID && m.mispar_rechev== MOTRecallNoArriveObj.mispar_rechev).FirstOrDefault();
 
             //רכב חדש
-            //if (CurrentCarInDB == null)
-            //{
+            if (CurrentCarInDB == null)
+            {
                 Context.MOTRecallNoArrive.Add(MOTRecallNoArriveObj);
                 TotalAddNewCar++;
                 Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTRecallNoArriveObj.RECALL_ID);
-           // }
-         
+                Context.SaveChanges();
+            }
 
-           // Context.SaveChanges();
-            
+
+            // 
+
         }
     }
 }

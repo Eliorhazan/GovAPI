@@ -318,10 +318,11 @@ namespace GovAPI
                 Context.MOTRecall.Add(MOTRecallObj);
                 TotalAddNewCar++;
                 Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTRecallObj.RECALL_ID);
+                Context.SaveChanges();
             }
          
 
-            Context.SaveChanges();
+            
             
         }
     }
