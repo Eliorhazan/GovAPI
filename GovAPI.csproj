@@ -90,6 +90,7 @@
     <Compile Include="Models\CarDealers.cs" />
     <Compile Include="Models\CarHoldingHistory.cs" />
     <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\MOTYevu.cs" />
     <Compile Include="Models\MOTCancel.cs" />
     <Compile Include="Models\Logs.cs" />
     <Compile Include="Models\MOT4Wheels.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\MOTRecall.cs" />
     <Compile Include="Models\MOTTags.cs" />
     <Compile Include="MotDealerAPI.cs" />
+    <Compile Include="MotYevuAPI.cs" />
     <Compile Include="MotTagAPI.cs" />
     <Compile Include="MotModelAPI.cs" />
     <Compile Include="MotRecallNoArriveAPI.cs" />

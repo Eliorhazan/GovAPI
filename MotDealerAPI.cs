@@ -302,6 +302,13 @@ namespace GovAPI
 
                     Context.SaveChanges();
                 }
+                else
+                {
+
+                    Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
+
+                }
+
 
             }
             catch (Exception ex)

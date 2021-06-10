@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,29 +11,58 @@ namespace GovAPI
     {
         static void Main(string[] args)
         {
+            string IDSAPI = ConfigurationManager.AppSettings.Get("IDSAPI");
 
-            //Mot4weelAPI ma = new Mot4weelAPI();
-            //ma.RunAPI();
+            string[] IDSAPIArray = IDSAPI.Split(',');
 
-            //MotCancelAPI ma = new MotCancelAPI();
-            //ma.RunAPI();
+            if (IDSAPIArray.Contains("1"))
+            {
+                Mot4weelAPI ma1 = new Mot4weelAPI();
+                ma1.RunAPI();
 
-            //MotRecallAPI ma = new MotRecallAPI();
-            //ma.RunAPI();
+            }
+            if (IDSAPIArray.Contains("2"))
+            {
+                MotCancelAPI ma2 = new MotCancelAPI();
+                ma2.RunAPI();
 
-            MOTRecallNoArriveAPI ma = new MOTRecallNoArriveAPI();
-            ma.RunAPI();
+            }
 
-            //MotModelAPI ma = new MotModelAPI();
-            //ma.RunAPI();
+            if (IDSAPIArray.Contains("3"))
+            {
+                MotRecallAPI ma3 = new MotRecallAPI();
+                ma3.RunAPI();
 
-            //MotTagAPI ma = new MotTagAPI();
-            //ma.RunAPI();
+            }
 
-            //MotDealerAPI ma = new MotDealerAPI();
-            //ma.RunAPI();
+            if (IDSAPIArray.Contains("4"))
+            {
+                MOTRecallNoArriveAPI ma4 = new MOTRecallNoArriveAPI();
+                ma4.RunAPI();
+            }
 
+            if (IDSAPIArray.Contains("5"))
+            {
+                MotModelAPI ma5 = new MotModelAPI();
+                ma5.RunAPI();
 
+            }
+            if (IDSAPIArray.Contains("6"))
+            {
+                MotTagAPI ma6 = new MotTagAPI();
+                ma6.RunAPI();
+
+            }
+            if (IDSAPIArray.Contains("7"))
+            {
+                MotDealerAPI ma7 = new MotDealerAPI();
+                ma7.RunAPI();
+            }
+            if (IDSAPIArray.Contains("8"))
+            {
+                MotYevuAPI ma8 = new MotYevuAPI();
+                ma8.RunAPI();
+            }
             Console.WriteLine("Stay Open");
             Console.ReadLine();
         }

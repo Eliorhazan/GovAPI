@@ -20,7 +20,7 @@ namespace GovAPI
         public DbSet<Logs> Logs { get; set; }
 
         public DbSet<MOTCancel> MOTCancel { get; set; }
-
+        public DbSet<MOTYevu> MOTYevu { get; set; }
 
 
 

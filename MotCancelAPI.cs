@@ -22,6 +22,8 @@ namespace GovAPI
 
         public static List<MOTCancel> DbMOTCancelList;
 
+        public static List<MOTCancel> MOTCancelNewList = new List<MOTCancel>();
+
         public static int TotalRowOver = 0;
 
         public static int TotalAddNewCar = 0;
@@ -120,7 +122,7 @@ namespace GovAPI
 
                         // Converting Request Params to Key Value Pair.  
                         allIputParams.Add(new KeyValuePair<string, string>("resource_id", "851ecab1-0622-4dbe-a6c7-f950cf82abf9"));
-                        allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
+                        allIputParams.Add(new KeyValuePair<string, string>("limit", "100000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
 
@@ -131,6 +133,9 @@ namespace GovAPI
 
                         do
                         {
+
+                            SaveMOT4WheelsNewList();
+
                             allIputParams.RemoveAll(x => x.Key == "offset");
                             allIputParams.Add(new KeyValuePair<string, string>("offset", CountOffset.ToString()));
 
@@ -138,12 +143,14 @@ namespace GovAPI
                             // Call REST Web API with parameters.  
                             responseObj = GetInfo(requestParams, Context).Result;
 
-                            CountOffset = CountOffset + 50000;
+                            CountOffset = CountOffset + 100000;
 
                         } while (responseObj > 0);
 
 
                     }
+
+                    SaveMOT4WheelsNewList();
 
 
                 }
@@ -187,7 +194,25 @@ namespace GovAPI
 
         }
 
-       public MOTCancel MOT4WheelsFromCsvTemp = new MOTCancel();
+        private void SaveMOT4WheelsNewList()
+        {
+            using (var Context = new Context())
+            {
+
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+
+                Context.MOTCancel.AddRange(MOTCancelNewList);
+                Context.SaveChanges();
+                MOTCancelNewList.Clear();
+            }
+
+        }
+
+
+
+
+        public MOTCancel MOT4WheelsFromCsvTemp = new MOTCancel();
 
         private MOTCancel GetMOT4WheelsObj(string[] csvArray, string[] colHeader)
         {
@@ -283,11 +308,21 @@ namespace GovAPI
             //רכב חדש
             if (CurrentCarInDB == null)
             {
-                Context.MOTCancel.Add(MOT4WheelsObj);
+                // Context.MOTCancel.Add(MOT4WheelsObj);
+
+
+                MOTCancelNewList.Add(MOT4WheelsObj);
                 TotalAddNewCar++;
                 Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOT4WheelsObj.mispar_rechev);
 
-                Context.SaveChanges();
+                //Context.SaveChanges();
+            }
+            else
+            {
+
+                Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
+
+
             }
            
 
