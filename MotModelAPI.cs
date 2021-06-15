@@ -22,6 +22,8 @@ namespace GovAPI
 
         public static List<MOTModels> DbMOTModelsList;
 
+        public static Dictionary<int, MOTModels> DictionaryMOTModels = new Dictionary<int, MOTModels>(); //
+
         public static int TotalRowOver = 0;
 
         public static int TotalAddNewCar = 0;
@@ -44,6 +46,9 @@ namespace GovAPI
 
                     // כל הטבלה הקיימת כרגע
                     DbMOTModelsList = Context.MOTModels.AsNoTracking().ToList();
+
+                    DictionaryMOTModels = DbMOTModelsList.ToDictionary(x => x._id, x => x);
+
 
                     // מגיע מcsv  
                     if (!string.IsNullOrEmpty(CsvLink))
@@ -138,7 +143,9 @@ namespace GovAPI
                             // Call REST Web API with parameters.  
                             responseObj = GetInfo(requestParams, Context).Result;
 
-                            CountOffset = CountOffset + 50000;
+                            if (responseObj == -1) responseObj = 2;
+
+                             CountOffset = CountOffset + 50000;
 
                         } while (responseObj > 0);
 
@@ -288,9 +295,21 @@ namespace GovAPI
                     {
 
 
-                        MOTModels MOTModelsFromGov = JsonConvert.DeserializeObject<MOTModels>(x.ToString());
+                        // Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
 
+                        //try
+                        //{
+
+                        MOTModels MOTModelsFromGov = JsonConvert.DeserializeObject<MOTModels>(x.ToString());
                         DBDeltaCheck(Context, MOTModelsFromGov);
+                        //}
+                        //catch(Exception ex)
+                        //{
+
+
+
+                        //}
+
 
                         CountScan++;
 
@@ -300,6 +319,8 @@ namespace GovAPI
 
 
                 }
+                else
+                    return -1;
             }
             return CountScan;
 
@@ -310,21 +331,27 @@ namespace GovAPI
 
             TotalRowOver++;
 
-            var CurrentCarInDB = DbMOTModelsList.Where(m => m.tozeret_nm == MOTModelsObj.tozeret_nm && m.degem_nm == MOTModelsObj.degem_nm && m.shnat_yitzur == MOTModelsObj.shnat_yitzur).FirstOrDefault();
+           // var CurrentCarInDB = DbMOTModelsList.Where(m => m.tozeret_nm == MOTModelsObj.tozeret_nm && m.degem_nm == MOTModelsObj.degem_nm && m.shnat_yitzur == MOTModelsObj.shnat_yitzur).FirstOrDefault();
+
+            MOTModels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+
+
+            DictionaryMOTModels.TryGetValue(MOTModelsObj._id, out CurrentCarInDB);
+
 
             //רכב חדש
             if (CurrentCarInDB == null)
             {
                 Context.MOTModels.Add(MOTModelsObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTModelsObj.tozeret_nm);
-                Context.SaveChanges();
+                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - ");
+               
 
             }
             else
             {
 
-                Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
+                Console.WriteLine("5)" + TotalRowOver.ToString() + "." + " No New - ");
 
             }
 

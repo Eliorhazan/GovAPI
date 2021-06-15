@@ -7,6 +7,8 @@ namespace GovAPI
     public partial class MOTModels
     {
         public int Id { get; set; }
+
+        public int _id { get; set; }
         public string sug_degem { get; set; }
         public double? tozeret_cd { get; set; }
         public string tozeret_nm { get; set; }
@@ -25,11 +27,11 @@ namespace GovAPI
         public string hanaa_nm { get; set; }
         public double? mazgan_ind { get; set; }
         public double? abs_ind { get; set; }
-        public double? kariot_avir_source { get; set; }
+        public string kariot_avir_source { get; set; }
         public double? mispar_kariot_avir { get; set; }
         public double? hege_koah_ind { get; set; }
         public double? automatic_ind { get; set; }
-        public double? halonot_hashmal_source { get; set; }
+        public string halonot_hashmal_source { get; set; }
         public double? mispar_halonot_hashmal { get; set; }
         public double? halon_bagg_ind { get; set; }
         public double? galgaley_sagsoget_kala_ind { get; set; }

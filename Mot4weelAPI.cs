@@ -25,6 +25,8 @@ namespace GovAPI
 
         public static Dictionary<int, MOT4Wheels> DictionaryMot = new Dictionary<int, MOT4Wheels>(); //
 
+        public static List<int> DictionaryMotFromGovOrCsv = new List<int>(); //
+
         public static List<MOT4Wheels> MOT4WheelsNewList = new List<MOT4Wheels>();
 
         public static List<CarHoldingHistory> CarHoldingHistoryNewList = new List<CarHoldingHistory>();
@@ -217,6 +219,7 @@ namespace GovAPI
 
                     SaveMOT4WheelsNewList();
                     SaveMOT4WheelsChangeList();
+                    SaveMOTNOTActive();
                     // Context.MOT4Wheels.AddRange(MOT4WheelsNewList);
 
 
@@ -261,6 +264,39 @@ namespace GovAPI
 
         }
 
+        private void SaveMOTNOTActive()
+        {
+         //   var NotExist = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key));
+
+            using (var Context = new Context())
+            {
+
+
+              
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+
+                foreach (var item in DictionaryMotFromGovOrCsv)
+                {
+
+                    MOT4Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+                    DictionaryMot.TryGetValue(item, out CurrentCarInDB);
+
+                    if (CurrentCarInDB == null)
+                    {
+                        CurrentCarInDB.Active = false;
+                        Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+                    }
+                }
+
+
+                Context.SaveChanges();
+               
+
+            }
+
+        }
+
         private void SaveMOT4WheelsNewList()
         {
             using (var Context = new Context())
@@ -273,6 +309,11 @@ namespace GovAPI
                 Context.SaveChanges();
                 MOT4WheelsNewList.Clear();
             }
+
+
+
+
+           
 
         }
 
@@ -462,13 +503,17 @@ namespace GovAPI
         private static void DBDeltaCheck(Context Context, MOT4Wheels MOT4WheelsObj)
         {
 
-           
+
+
+          
+
             TotalRowOver++;
 
             MOT4Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
 
 
             DictionaryMot.TryGetValue(MOT4WheelsObj.mispar_rechev,out CurrentCarInDB);
+           
             //רכב חדש
             if (CurrentCarInDB == null)
             {
@@ -481,6 +526,7 @@ namespace GovAPI
             }
             else
             {
+                DictionaryMotFromGovOrCsv.Add(MOT4WheelsObj.mispar_rechev);
 
                 if (MOT4WheelsObj.baalut != CurrentCarInDB.baalut)
                 {
@@ -538,10 +584,30 @@ namespace GovAPI
 
 
                 }
+
+                else if (MOT4WheelsObj.moed_aliya_lakvish != CurrentCarInDB.moed_aliya_lakvish)
+                {
+
+
+                  
+                    // עדכון תוקף לחדש
+                    CurrentCarInDB.moed_aliya_lakvish = MOT4WheelsObj.moed_aliya_lakvish;
+                    // Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+
+                    MOT4WheelsChangeList.Add(CurrentCarInDB);
+
+
+
+                  
+                    Console.WriteLine(TotalRowOver.ToString() + "." + " Change  - moed_aliya_lakvish -" + MOT4WheelsObj.mispar_rechev);
+
+
+                }
+
                 else
                 {
 
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " OverWithout Change - " + MOT4WheelsObj.mispar_rechev);
+                    Console.WriteLine("1)" + TotalRowOver.ToString() + "." + " OverWithout Change - " + MOT4WheelsObj.mispar_rechev);
 
 
                 }

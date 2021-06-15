@@ -320,7 +320,7 @@ namespace GovAPI
             else
             {
 
-                Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
+                Console.WriteLine("8)" + TotalRowOver.ToString() + "." + " No New - ");
 
             }
 

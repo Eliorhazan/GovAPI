@@ -317,7 +317,7 @@ namespace GovAPI
 
             MOTRecallNoArriveNewList.Add(MOTRecallNoArriveObj);
             TotalAddNewCar++;
-            Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTRecallNoArriveObj.mispar_rechev);
+            Console.WriteLine("4)" + TotalRowOver.ToString() + "." + " Add New - " + MOTRecallNoArriveObj.mispar_rechev);
 
             //Context.SaveChanges();
             //  }

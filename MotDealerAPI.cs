@@ -305,7 +305,7 @@ namespace GovAPI
                 else
                 {
 
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " No New - ");
+                    Console.WriteLine("7)" + TotalRowOver.ToString() + "." + " No New - ");
 
                 }
 
