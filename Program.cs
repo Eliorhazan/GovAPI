@@ -63,6 +63,18 @@ namespace GovAPI
                 MotYevuAPI ma8 = new MotYevuAPI();
                 ma8.RunAPI();
             }
+
+            if (IDSAPIArray.Contains("9"))
+            {
+                Mot4weelNoActiveWithDegemAPI ma9 = new Mot4weelNoActiveWithDegemAPI();
+                ma9.RunAPI();
+            }
+
+            if (IDSAPIArray.Contains("10"))
+            {
+                Mot4weelNoActiveWithOutDegemAPI ma10 = new Mot4weelNoActiveWithOutDegemAPI();
+                ma10.RunAPI();
+            }
             Console.WriteLine("Stay Open");
             Console.ReadLine();
         }

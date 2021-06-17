@@ -21,6 +21,9 @@ namespace GovAPI
 
         public DbSet<MOTCancel> MOTCancel { get; set; }
         public DbSet<MOTYevu> MOTYevu { get; set; }
+        public DbSet<MOTNotActiveWithOutDegem> MOTNotActiveWithOutDegem { get; set; }
+
+        
 
 
 

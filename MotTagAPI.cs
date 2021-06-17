@@ -281,7 +281,11 @@ namespace GovAPI
                     {
 
 
-                        MOTTags MOT4WheelsFromGov = JsonConvert.DeserializeObject<MOTTags>(x.ToString());
+                        MOTTags MOT4WheelsFromGov = new MOTTags();//
+                        MOT4WheelsFromGov.MISPAR_RECHEV = Helper.ConvertToInt(x["MISPAR RECHEV"].ToString());
+                        MOT4WheelsFromGov.TAARICH_HAFAKAT_TAG = x["TAARICH HAFAKAT TAG"].ToString();
+                        MOT4WheelsFromGov.SUG_TAV = x["SUG TAV"].ToString();
+                        //JsonConvert.DeserializeObject<MOTTags>(x.ToString());
 
                         DBDeltaCheck(Context, MOT4WheelsFromGov);
 
@@ -313,7 +317,7 @@ namespace GovAPI
 
                 MOTTagsNewList.Add(MOTTagsObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOTTagsObj.MISPAR_RECHEV);
+                Console.WriteLine("6)" + TotalRowOver.ToString() + "." + " Add New - " + MOTTagsObj.MISPAR_RECHEV);
 
                 //Context.SaveChanges();
             }

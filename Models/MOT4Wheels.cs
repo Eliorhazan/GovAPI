@@ -32,7 +32,7 @@ namespace GovAPI
         public string kinuy_mishari { get; set; }
         public string moed_aliya_lakvish { get; set; }
 
-        public bool Active { get; set; } = true;
+        public bool Active { get; set; } =  true;
         public object this[string propertyName]
         {
             get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }

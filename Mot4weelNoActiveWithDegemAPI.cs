@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace GovAPI
 {
-    class Mot4weelAPI
+    class Mot4weelNoActiveWithDegemAPI
     {
 
         public static List<MOT4Wheels> DbMOT4WheelsList;
@@ -56,9 +56,8 @@ namespace GovAPI
 
 
 
-                    // IsFirstUse = ConfigurationManager.AppSettings.Get("IsFirstUse");
                     // אם קיים קישור בקונפיג
-                    string CsvLink = ConfigurationManager.AppSettings.Get("Mot4wheels");
+                    string CsvLink = ConfigurationManager.AppSettings.Get("Mot4wheelsNoActiveWithDegem");
 
                     // כל הטבלה הקיימת כרגע
                     DbMOT4WheelsList = Context.MOT4Wheels.AsNoTracking().ToList();
@@ -70,9 +69,9 @@ namespace GovAPI
                     {
 
                         Logs log = new Logs();
-                        log.TableName = "MOT4Wheels";
+                        log.TableName = "MOT4Wheels NoActiveWithDegem";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOT4Wheels from csv";
+                        log.ActionName = " Start Download MOT4Wheels NoActiveWithDegem from csv";
 
                         Context.Logs.Add(log);
 
@@ -106,10 +105,7 @@ namespace GovAPI
 
                                 }
 
-                                //if (TotalRowOver > 0 && TotalRowOver % 100000 == 0)
-                                //{
-                                //    SaveMOT4WheelsNewList();
-                                //}
+                             
 
                                 if (TotalAddNewCar!=0 &&  TotalAddNewCar % 100000 == 0)
                                 {
@@ -143,9 +139,9 @@ namespace GovAPI
                     else
                     {
                         Logs log = new Logs();
-                        log.TableName = "MOT4Wheels";
+                        log.TableName = "Mot4wheelsNoActiveWithDegem";
                         log.TimeStamp = DateTime.Now;
-                        log.ActionName = " Start Download MOT4Wheels from gov...";
+                        log.ActionName = "Download Mot4wheelsNoActiveWithDegem gov";
 
                         Context.Logs.Add(log);
 
@@ -157,7 +153,7 @@ namespace GovAPI
                         string requestParams = string.Empty;
 
                         // Converting Request Params to Key Value Pair.  
-                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "053cea08-09bc-40ec-8f7a-156f0677aff3"));
+                        allIputParams.Add(new KeyValuePair<string, string>("resource_id", "f6efe89a-fb3d-43a4-bb61-9bf12a9b9099"));
                         allIputParams.Add(new KeyValuePair<string, string>("limit", "100000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
@@ -201,7 +197,7 @@ namespace GovAPI
                             catch (Exception ex)
                             {
                                 Logs logInner = new Logs();
-                                logInner.TableName = "MOT4Wheels";
+                                logInner.TableName = "Mot4wheelsNoActiveWithDegem";
                                 logInner.TimeStamp = DateTime.Now;
                                 logInner.ActionName = "Exception";
                                 logInner.Exeption = ex.Message + ex.InnerException;
@@ -219,8 +215,7 @@ namespace GovAPI
 
                     SaveMOT4WheelsNewList();
                     SaveMOT4WheelsChangeList();
-                   // SaveMOTNOTActive();
-                    
+                 
 
 
 
@@ -229,7 +224,7 @@ namespace GovAPI
                 catch (Exception ex)
                 {
                     Logs log = new Logs();
-                    log.TableName = "MOT4Wheels";
+                    log.TableName = "Mot4wheelsNoActiveWithDegem";
                     log.TimeStamp = DateTime.Now;
                     log.ActionName = "Exception";
                     log.Exeption = ex.Message + ex.InnerException;
@@ -243,9 +238,9 @@ namespace GovAPI
                 {
 
                     Logs log = new Logs();
-                    log.TableName = "MOT4Wheels";
+                    log.TableName = "Mot4wheelsNoActiveWithDegem";
                     log.TimeStamp = DateTime.Now;
-                    log.ActionName = " End Download MOT4Wheels";
+                    log.ActionName = " End Download Mot4wheelsNoActiveWithDegem";
 
                     log.TotalAddNewRow = TotalAddNewCar;
                     log.TotalChange1 = TotalChangeBaalut;
@@ -266,7 +261,7 @@ namespace GovAPI
 
         private void SaveMOTNOTActive()
         {
-         
+         //   var NotExist = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key));
 
             using (var Context = new Context())
             {
@@ -324,7 +319,7 @@ namespace GovAPI
             {
 
 
-                Context.CarHoldingHistory.AddRange(CarHoldingHistoryNewList);
+            
 
                 Context.Configuration.AutoDetectChangesEnabled = false;
                 Context.Configuration.ValidateOnSaveEnabled = false;
@@ -336,7 +331,7 @@ namespace GovAPI
 
 
                 Context.SaveChanges();
-                CarHoldingHistoryNewList.Clear();
+               
                 MOT4WheelsChangeList.Clear();
 
             }
@@ -345,7 +340,7 @@ namespace GovAPI
 
 
 
-        // public static MOT4Wheels MOT4WheelsFromCsvTemp = new MOT4Wheels();
+      
 
         private static MOT4Wheels GetMOT4WheelsObj(string[] csvArray, string[] colHeader)
         {
@@ -378,37 +373,7 @@ namespace GovAPI
                 // }
             }
 
-            //MOT4Wheels MOT4WheelsFromCsv = new MOT4Wheels()
-            //{
-
-            //        mispar_rechev = Helper.ConvertToInt(csvArray[0]),
-            //        tozeret_cd = csvArray[1].Replace("\"", ""),
-            //        sug_degem = csvArray[2].Replace("\"", ""),
-            //        tozeret_nm = csvArray[3].Replace("\"", ""),
-            //        degem_cd = csvArray[4].Replace("\"", ""),
-            //        degem_nm = csvArray[5].Replace("\"", ""),
-            //        ramat_gimur = csvArray[6].Replace("\"", ""),
-            //        ramat_eivzur_betihuty = csvArray[7].Replace("\"", ""),
-            //        kvutzat_zihum = csvArray[8].Replace("\"", ""),
-            //        shnat_yitzur = csvArray[9].Replace("\"", ""),
-            //        degem_manoa = csvArray[10].Replace("\"", ""),
-            //        mivchan_acharon_dt = Helper.ConvertToDatetime(csvArray[11]),
-            //        tokef_dt = Helper.ConvertToDatetime(csvArray[12]),
-            //        baalut = csvArray[13].Replace("\"", ""),
-            //        misgeret = csvArray[14].Replace("\"", ""),
-            //        tzeva_cd = Helper.ConvertToInt(csvArray[15]), // אין בקבצים
-            //        tzeva_rechev = csvArray[16].Replace("\"", ""),
-            //        zmig_kidmi = csvArray[17].Replace("\"", ""),
-            //        zmig_ahori = csvArray[18].Replace("\"", ""),
-            //        sug_delek_nm = csvArray[19].Replace("\"", ""),
-            //        horaat_rishum = csvArray[20].Replace("\"", ""),
-            //        moed_aliya_lakvish = csvArray[21].Replace("\"", ""),// אין בקבצים
-            //        kinuy_mishari = csvArray[22].Replace("\"", "")
-
-            //};
-
-
-
+          
 
             return MOT4WheelsFromCsv;
         }
@@ -468,7 +433,7 @@ namespace GovAPI
                     else
                     {
                         Logs logInner = new Logs();
-                        logInner.TableName = "MOT4Wheels";
+                        logInner.TableName = "Mot4wheelsNoActiveWithDegem";
                         logInner.TimeStamp = DateTime.Now;
                         logInner.ActionName = "Exception";
                         logInner.Exeption = "DataError Tzahi";
@@ -485,7 +450,7 @@ namespace GovAPI
             catch (Exception ex)
             {
                 Logs log = new Logs();
-                log.TableName = "MOT4Wheels";
+                log.TableName = "Mot4wheelsNoActiveWithDegem";
                 log.TimeStamp = DateTime.Now;
                 log.ActionName = "Exception";
                 log.Exeption = "sssss" + ex.Message + ex.InnerException;
@@ -517,100 +482,38 @@ namespace GovAPI
             //רכב חדש
             if (CurrentCarInDB == null)
             {
+                MOT4WheelsObj.Active = false;
                 // Context.MOT4Wheels.Add(MOT4WheelsObj);
                 MOT4WheelsNewList.Add(MOT4WheelsObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - " + MOT4WheelsObj.mispar_rechev);
+                Console.WriteLine("9)" + TotalRowOver.ToString() + "." + " Add New Deactive- " + MOT4WheelsObj.mispar_rechev);
 
                 return;
             }
             else
             {
-               // DictionaryMotFromGovOrCsv.Add(MOT4WheelsObj.mispar_rechev);
+              
 
-                if (MOT4WheelsObj.baalut != CurrentCarInDB.baalut)
+                if (CurrentCarInDB.Active)
                 {
 
-                    CarHoldingHistory ch = new CarHoldingHistory()
-                    {
-                        mispar_rechev = CurrentCarInDB.mispar_rechev,
-                        baalut = CurrentCarInDB.baalut,
-                        LastScanDate = DateTime.Now
-                    };
-                    CarHoldingHistoryNewList.Add(ch);
-                    // Context.CarHoldingHistory.Add(ch);
-
-
-                    // עדכון בעלות לחדש
-                    CurrentCarInDB.baalut = MOT4WheelsObj.baalut;
-                    //  Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-
-                    MOT4WheelsChangeList.Add(CurrentCarInDB);
+                   
+                    CurrentCarInDB.Active = false;
 
                     TotalChangeBaalut++;
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " Change Baalut - " + MOT4WheelsObj.mispar_rechev);
-
-                }
-
-                else if (MOT4WheelsObj.tokef_dt != CurrentCarInDB.tokef_dt)
-                {
-
-
-                    CarHoldingHistory ch = new CarHoldingHistory()
-                    {
-                        mispar_rechev = CurrentCarInDB.mispar_rechev,
-                        tokef_dt = CurrentCarInDB.tokef_dt,
-                        mivchan_acharon_dt = CurrentCarInDB.mivchan_acharon_dt,
-                        LastScanDate = DateTime.Now
-                    };
-
-
-                    CarHoldingHistoryNewList.Add(ch);
-                    // Context.CarHoldingHistory.Add(ch);
-
-
-                    // עדכון תוקף לחדש
-                    CurrentCarInDB.tokef_dt = MOT4WheelsObj.tokef_dt;
-                    CurrentCarInDB.mivchan_acharon_dt = MOT4WheelsObj.mivchan_acharon_dt;
-                    // Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-
                     MOT4WheelsChangeList.Add(CurrentCarInDB);
 
-
-
-                    TotalChangeTokefDate++;
-                    Console.WriteLine(TotalRowOver.ToString() + "." + " Change TokefDate - " + MOT4WheelsObj.mispar_rechev);
-
-
-                }
-
-                else if (!CurrentCarInDB.Active)
-                {
-
-
-
-                    // עדכון תוקף לחדש
-                    CurrentCarInDB.Active = true;
-
-                    MOT4WheelsChangeList.Add(CurrentCarInDB);
-
-                    Console.WriteLine("1)" + TotalRowOver.ToString() + "." + " Change  - ActiveCar -" + MOT4WheelsObj.mispar_rechev);
-
+                   
+                    Console.WriteLine("9)" + TotalRowOver.ToString() + "." + " Deactive - " + MOT4WheelsObj.mispar_rechev);
 
                 }
 
                 else
                 {
-                    Console.WriteLine("1)" + TotalRowOver.ToString() + "." + " OverWithout Change - " + MOT4WheelsObj.mispar_rechev);
-
+                    Console.WriteLine("9)" + TotalRowOver.ToString() + "." + " OverWithout Change - " + MOT4WheelsObj.mispar_rechev);
                 }
 
             }
-
-
-            // Context.SaveChanges();
-
-
 
         }
     }

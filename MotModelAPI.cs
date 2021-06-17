@@ -125,7 +125,7 @@ namespace GovAPI
 
                         // Converting Request Params to Key Value Pair.  
                         allIputParams.Add(new KeyValuePair<string, string>("resource_id", "142afde2-6228-49f9-8a29-9b6c3a0cbe40"));
-                        allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
+                        allIputParams.Add(new KeyValuePair<string, string>("limit", "20000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
 
@@ -145,7 +145,7 @@ namespace GovAPI
 
                             if (responseObj == -1) responseObj = 2;
 
-                             CountOffset = CountOffset + 50000;
+                             CountOffset = CountOffset + 20000;
 
                         } while (responseObj > 0);
 
@@ -160,7 +160,7 @@ namespace GovAPI
                     log.TableName = "MOTModels";
                     log.TimeStamp = DateTime.Now;
                     log.ActionName = "Exception";
-                    log.Exeption = ex.Message;
+                    log.Exeption = ex.Message  + ex.InnerException;
 
                     Context.Logs.Add(log);
 
@@ -287,6 +287,9 @@ namespace GovAPI
                 // Verification  
                 if (response.IsSuccessStatusCode)
                 {
+                    
+                    
+                    
                     // Reading Response.  
                     string result = response.Content.ReadAsStringAsync().Result;
                     JObject parent = JObject.Parse(result);
@@ -316,7 +319,8 @@ namespace GovAPI
 
                     }
 
-
+                    
+                    
 
                 }
                 else
