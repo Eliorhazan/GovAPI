@@ -66,17 +66,24 @@ namespace GovAPI
 
             if (IDSAPIArray.Contains("9"))
             {
+                System.Threading.Thread.Sleep(5000);
+
+                Console.WriteLine("Start Mot4weelNoActiveWithDegemAPI ---------------------");
                 Mot4weelNoActiveWithDegemAPI ma9 = new Mot4weelNoActiveWithDegemAPI();
                 ma9.RunAPI();
+                Console.WriteLine("End Mot4weelNoActiveWithDegemAPI ---------------------");
             }
 
             if (IDSAPIArray.Contains("10"))
             {
+                System.Threading.Thread.Sleep(5000);
+                Console.WriteLine("Start Mot4weelNoActiveWithOutDegemAPI ---------------------");
                 Mot4weelNoActiveWithOutDegemAPI ma10 = new Mot4weelNoActiveWithOutDegemAPI();
                 ma10.RunAPI();
+                Console.WriteLine("End Mot4weelNoActiveWithOutDegemAPI ---------------------");
             }
-            Console.WriteLine("Stay Open");
-            Console.ReadLine();
+            //Console.WriteLine("Stay Open");
+            //Console.ReadLine();
         }
     }
 }

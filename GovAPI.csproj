@@ -102,12 +102,13 @@
     <Compile Include="Mot4weelNoActiveWithOutDegemAPI.cs" />
     <Compile Include="Mot4weelNoActiveWithDegemAPI.cs" />
     <Compile Include="MotDealerAPI.cs" />
+    <Compile Include="MotCancelAPI.cs" />
     <Compile Include="MotYevuAPI.cs" />
     <Compile Include="MotTagAPI.cs" />
     <Compile Include="MotModelAPI.cs" />
     <Compile Include="MotRecallNoArriveAPI.cs" />
     <Compile Include="MotRecallAPI.cs" />
-    <Compile Include="MotCancelAPI.cs" />
+    <Compile Include="_MotCancelAPI.cs" />
     <Compile Include="Mot4weelAPI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

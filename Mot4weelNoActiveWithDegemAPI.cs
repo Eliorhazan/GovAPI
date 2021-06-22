@@ -259,38 +259,38 @@ namespace GovAPI
 
         }
 
-        private void SaveMOTNOTActive()
-        {
-         //   var NotExist = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key));
+        //private void SaveMOTNOTActive()
+        //{
+        // //   var NotExist = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key));
 
-            using (var Context = new Context())
-            {
+        //    using (var Context = new Context())
+        //    {
 
 
               
-                Context.Configuration.AutoDetectChangesEnabled = false;
-                Context.Configuration.ValidateOnSaveEnabled = false;
+        //        Context.Configuration.AutoDetectChangesEnabled = false;
+        //        Context.Configuration.ValidateOnSaveEnabled = false;
 
-                foreach (var item in DictionaryMotFromGovOrCsv)
-                {
+        //        foreach (var item in DictionaryMotFromGovOrCsv)
+        //        {
 
-                    MOT4Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
-                    DictionaryMot.TryGetValue(item, out CurrentCarInDB);
+        //            MOT4Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+        //            DictionaryMot.TryGetValue(item, out CurrentCarInDB);
 
-                    if (CurrentCarInDB == null)
-                    {
-                        CurrentCarInDB.Active = false;
-                        Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-                    }
-                }
+        //            if (CurrentCarInDB == null)
+        //            {
+        //                CurrentCarInDB.Active = false;
+        //                Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+        //            }
+        //        }
 
 
-                Context.SaveChanges();
+        //        Context.SaveChanges();
                
 
-            }
+        //    }
 
-        }
+        //}
 
         private void SaveMOT4WheelsNewList()
         {
@@ -482,7 +482,7 @@ namespace GovAPI
             //רכב חדש
             if (CurrentCarInDB == null)
             {
-                MOT4WheelsObj.Active = false;
+                MOT4WheelsObj.Active = 0;
                 // Context.MOT4Wheels.Add(MOT4WheelsObj);
                 MOT4WheelsNewList.Add(MOT4WheelsObj);
                 TotalAddNewCar++;
@@ -494,11 +494,11 @@ namespace GovAPI
             {
               
 
-                if (CurrentCarInDB.Active)
+                if (CurrentCarInDB.Active!=0)
                 {
 
                    
-                    CurrentCarInDB.Active = false;
+                    CurrentCarInDB.Active = 0;
 
                     TotalChangeBaalut++;
                     MOT4WheelsChangeList.Add(CurrentCarInDB);

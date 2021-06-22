@@ -154,7 +154,7 @@ namespace GovAPI
 
                         // Converting Request Params to Key Value Pair.  
                         allIputParams.Add(new KeyValuePair<string, string>("resource_id", "6f6acd03-f351-4a8f-8ecf-df792f4f573a"));
-                        allIputParams.Add(new KeyValuePair<string, string>("limit", "100000"));
+                        allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
 
@@ -187,7 +187,7 @@ namespace GovAPI
                                 }
                                 else
                                 {
-                                    CountOffset = CountOffset + 100000;
+                                    CountOffset = CountOffset + 50000;
 
                                 }
 
@@ -238,9 +238,9 @@ namespace GovAPI
                 {
 
                     Logs log = new Logs();
-                    log.TableName = "MOTNotActiveWithOutDegemNoActiveWithDegem";
+                    log.TableName = "MOTNotActiveWithOutDegem";
                     log.TimeStamp = DateTime.Now;
-                    log.ActionName = " End Download MOTNotActiveWithOutDegemNoActiveWithDegem";
+                    log.ActionName = " End Download MOTNotActiveWithOutDegem";
 
                     log.TotalAddNewRow = TotalAddNewCar;
                     log.TotalChange1 = TotalChangeBaalut;

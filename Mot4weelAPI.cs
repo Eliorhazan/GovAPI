@@ -219,7 +219,7 @@ namespace GovAPI
 
                     SaveMOT4WheelsNewList();
                     SaveMOT4WheelsChangeList();
-                   // SaveMOTNOTActive();
+                    SaveMOTNOTActive();
                     
 
 
@@ -284,7 +284,7 @@ namespace GovAPI
 
                     if (CurrentCarInDB == null)
                     {
-                        CurrentCarInDB.Active = false;
+                        CurrentCarInDB.Active = -1;
                         Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
                     }
                 }
@@ -526,7 +526,7 @@ namespace GovAPI
             }
             else
             {
-               // DictionaryMotFromGovOrCsv.Add(MOT4WheelsObj.mispar_rechev);
+                DictionaryMotFromGovOrCsv.Add(MOT4WheelsObj.mispar_rechev);
 
                 if (MOT4WheelsObj.baalut != CurrentCarInDB.baalut)
                 {
@@ -584,13 +584,13 @@ namespace GovAPI
 
                 }
 
-                else if (!CurrentCarInDB.Active)
+                else if (CurrentCarInDB.Active!=1)
                 {
 
 
 
                     // עדכון תוקף לחדש
-                    CurrentCarInDB.Active = true;
+                    CurrentCarInDB.Active = 1;
 
                     MOT4WheelsChangeList.Add(CurrentCarInDB);
 
