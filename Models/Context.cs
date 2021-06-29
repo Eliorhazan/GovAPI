@@ -8,6 +8,12 @@ namespace GovAPI
       
 
         public  DbSet<MOT4Wheels> MOT4Wheels { get; set; }
+        public DbSet<MOT2Wheels> MOT2Wheels { get; set; }
+        public DbSet<MOT35Wheels> MOT35Wheels { get; set; }
+        public DbSet<GovMishkun> GovMishkun { get; set; }
+
+
+        
         public  DbSet<MOTModels> MOTModels { get; set; }
         public  DbSet<MOTRecall> MOTRecall { get; set; }
 

@@ -22,6 +22,8 @@ namespace GovAPI
 
         public static List<MOTCancel> DbMOTCancelList;
 
+        public static List<MOTCancel> MOTCancelNewList = new List<MOTCancel>();
+
         public static Dictionary<int, MOTCancel> DictionaryMOTCancel = new Dictionary<int, MOTCancel>(); //
 
         public static int TotalRowOver = 0;
@@ -136,6 +138,9 @@ namespace GovAPI
 
                         do
                         {
+                            SaveMOTCancelNewList();
+                          //  SaveMOTCancelChangeList();
+
                             allIputParams.RemoveAll(x => x.Key == "offset");
                             allIputParams.Add(new KeyValuePair<string, string>("offset", CountOffset.ToString()));
 
@@ -151,6 +156,8 @@ namespace GovAPI
 
 
                     }
+
+                    SaveMOTCancelNewList();
 
 
                 }
@@ -194,9 +201,24 @@ namespace GovAPI
 
         }
 
+        private void SaveMOTCancelNewList()
+        {
+            using (var Context = new Context())
+            {
+
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+
+                Context.MOTCancel.AddRange(MOTCancelNewList);
+                Context.SaveChanges();
+                MOTCancelNewList.Clear();
+            }
+
+        }
+
        public MOTCancel MOTCancelFromCsvTemp = new MOTCancel();
 
-        private MOTCancel GetMOTCancelObj(string[] csvArray, string[] colHeader)
+       private MOTCancel GetMOTCancelObj(string[] csvArray, string[] colHeader)
         {
 
             MOTCancel MOTCancelFromCsv = MOTCancelFromCsvTemp;
@@ -337,7 +359,7 @@ namespace GovAPI
 
            // var CurrentCarInDB = DbMOTCancelList.Where(m => m.tozeret_nm == MOTCancelObj.tozeret_nm && m.degem_nm == MOTCancelObj.degem_nm && m.shnat_yitzur == MOTCancelObj.shnat_yitzur).FirstOrDefault();
 
-            MOTCancel CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+            MOTCancel CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOTCancelObj.mispar_rechev).FirstOrDefault();
 
 
             DictionaryMOTCancel.TryGetValue(MOTCancelObj.mispar_rechev, out CurrentCarInDB);
@@ -346,7 +368,8 @@ namespace GovAPI
             //רכב חדש
             if (CurrentCarInDB == null)
             {
-                Context.MOTCancel.Add(MOTCancelObj);
+                // Context.MOTCancel.Add(MOTCancelObj);
+                MOTCancelNewList.Add(MOTCancelObj);
                 TotalAddNewCar++;
                 Console.WriteLine("2)" + TotalRowOver.ToString() + "." + " Add New - " + MOTCancelObj.mispar_rechev);
               

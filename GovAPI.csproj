@@ -78,6 +78,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +91,9 @@
     <Compile Include="Models\CarDealers.cs" />
     <Compile Include="Models\CarHoldingHistory.cs" />
     <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\GovMishkun.cs" />
+    <Compile Include="Models\MOT2Wheels.cs" />
+    <Compile Include="Models\MOT35Wheels.cs" />
     <Compile Include="Models\MOTNotActiveWithOutDegem.cs" />
     <Compile Include="Models\MOTYevu.cs" />
     <Compile Include="Models\MOTCancel.cs" />
@@ -99,6 +103,9 @@
     <Compile Include="Models\MOTRecallNoArrive.cs" />
     <Compile Include="Models\MOTRecall.cs" />
     <Compile Include="Models\MOTTags.cs" />
+    <Compile Include="GovMishkunAPI.cs" />
+    <Compile Include="Mot2weelAPI.cs" />
+    <Compile Include="Mot35weelAPI.cs" />
     <Compile Include="Mot4weelNoActiveWithOutDegemAPI.cs" />
     <Compile Include="Mot4weelNoActiveWithDegemAPI.cs" />
     <Compile Include="MotDealerAPI.cs" />

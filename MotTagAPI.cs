@@ -24,6 +24,9 @@ namespace GovAPI
 
         public static List<MOTTags> MOTTagsNewList = new List<MOTTags>();
 
+        public static Dictionary<int, MOTTags> DictionaryMot = new Dictionary<int, MOTTags>(); //
+        public static List<int> DictionaryMotFromGovOrCsv = new List<int>(); //
+
         public static int TotalRowOver = 0;
 
         public static int TotalAddNewCar = 0;
@@ -47,6 +50,7 @@ namespace GovAPI
                     // כל הטבלה הקיימת כרגע
                     DbMOTTagsList = Context.MOTTags.AsNoTracking().ToList();
 
+                    DictionaryMot = DbMOTTagsList.ToDictionary(x => x.MISPAR_RECHEV, x => x);
                     // מגיע מcsv  
                     if (!string.IsNullOrEmpty(CsvLink))
                     {
@@ -151,7 +155,7 @@ namespace GovAPI
                     }
 
                     SaveMOT4WheelsNewList();
-
+                    SaveMOTNOTActive();
 
                 }
                 catch (Exception ex)
@@ -191,6 +195,39 @@ namespace GovAPI
             }
 
 
+
+        }
+        private void SaveMOTNOTActive()
+        {
+
+
+            using (var Context = new Context())
+            {
+
+
+
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+
+                foreach (var item in DictionaryMotFromGovOrCsv)
+                {
+
+                    MOTTags CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT4WheelsObj.mispar_rechev).FirstOrDefault();
+
+                    DictionaryMot.TryGetValue(item, out CurrentCarInDB);
+
+                    if (CurrentCarInDB == null)
+                    {
+                        CurrentCarInDB.Active = false;
+                        Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+                    }
+                }
+
+
+                Context.SaveChanges();
+
+
+            }
 
         }
 
@@ -323,6 +360,8 @@ namespace GovAPI
             }
             else
             {
+
+                DictionaryMotFromGovOrCsv.Add(MOTTagsObj.MISPAR_RECHEV);
 
                 Console.WriteLine("6)" + TotalRowOver.ToString() + "." + " No New - ");
 

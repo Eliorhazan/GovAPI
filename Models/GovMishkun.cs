@@ -4,17 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GovAPI
 {
-    public partial class MOTTags
+    public class GovMishkun
     {
+        [Key]
         public int Id { get; set; }
+    
+        public int MishkunId { get; set; }
 
-      
-        public int MISPAR_RECHEV { get; set; }
-      
-        public string TAARICH_HAFAKAT_TAG { get; set; }
-      
-        public string SUG_TAV { get; set; }
+        public DateTime? DateRegister { get; set; }
+        public string StatusRegister { get; set; }
+        public string DateStatusRegister { get; set; }
+        public DateTime? DateStatus { get; set; }
+        public DateTime? DateNekes { get; set; }
 
+        public DateTime? DateRemoveNekes { get; set; }
         public bool Active { get; set; } = true;
 
         public object this[string propertyName]
@@ -22,5 +25,7 @@ namespace GovAPI
             get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }
             set { this.GetType().GetProperty(propertyName).SetValue(this, value, null); }
         }
+
     }
+
 }

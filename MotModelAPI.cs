@@ -22,6 +22,8 @@ namespace GovAPI
 
         public static List<MOTModels> DbMOTModelsList;
 
+        public static List<MOTModels> MOTModelsNewList = new List<MOTModels>();
+
         public static Dictionary<int, MOTModels> DictionaryMOTModels = new Dictionary<int, MOTModels>(); //
 
         public static int TotalRowOver = 0;
@@ -136,6 +138,9 @@ namespace GovAPI
 
                         do
                         {
+
+                            SaveMOTModelsNewList();
+
                             allIputParams.RemoveAll(x => x.Key == "offset");
                             allIputParams.Add(new KeyValuePair<string, string>("offset", CountOffset.ToString()));
 
@@ -151,6 +156,8 @@ namespace GovAPI
 
 
                     }
+
+                    SaveMOTModelsNewList();
 
 
                 }
@@ -194,7 +201,23 @@ namespace GovAPI
 
         }
 
-       public MOTModels MOTModelsFromCsvTemp = new MOTModels();
+
+        private void SaveMOTModelsNewList()
+        {
+            using (var Context = new Context())
+            {
+
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+
+                Context.MOTModels.AddRange(MOTModelsNewList);
+                Context.SaveChanges();
+                MOTModelsNewList.Clear();
+            }
+
+        }
+
+        public MOTModels MOTModelsFromCsvTemp = new MOTModels();
 
         private MOTModels GetMOTModelsObj(string[] csvArray, string[] colHeader)
         {
@@ -346,9 +369,11 @@ namespace GovAPI
             //רכב חדש
             if (CurrentCarInDB == null)
             {
-                Context.MOTModels.Add(MOTModelsObj);
+                //Context.MOTModels.Add(MOTModelsObj);
+
+                MOTModelsNewList.Add(MOTModelsObj);
                 TotalAddNewCar++;
-                Console.WriteLine(TotalRowOver.ToString() + "." + " Add New - ");
+                Console.WriteLine("5)" + TotalRowOver.ToString() + "." + " Add New - ");
                
 
             }

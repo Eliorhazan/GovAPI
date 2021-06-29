@@ -154,7 +154,7 @@ namespace GovAPI
 
                         // Converting Request Params to Key Value Pair.  
                         allIputParams.Add(new KeyValuePair<string, string>("resource_id", "f6efe89a-fb3d-43a4-bb61-9bf12a9b9099"));
-                        allIputParams.Add(new KeyValuePair<string, string>("limit", "100000"));
+                        allIputParams.Add(new KeyValuePair<string, string>("limit", "50000"));
                         allIputParams.Add(new KeyValuePair<string, string>("offset", "0"));
                         // URL Request Query parameters.  
 
@@ -187,7 +187,7 @@ namespace GovAPI
                                 }
                                 else
                                 {
-                                    CountOffset = CountOffset + 100000;
+                                    CountOffset = CountOffset + 50000;
 
                                 }
 
