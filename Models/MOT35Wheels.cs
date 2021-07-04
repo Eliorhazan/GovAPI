@@ -32,7 +32,7 @@ namespace GovAPI
 
 
 
-        public int Active { get; set; } =  1;
+        public int? Active { get; set; } =  1;
         public object this[string propertyName]
         {
             get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }

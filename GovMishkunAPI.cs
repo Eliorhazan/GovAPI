@@ -63,7 +63,7 @@ namespace GovAPI
                     // כל הטבלה הקיימת כרגע
                     DbGovMishkunList = Context.GovMishkun.AsNoTracking().ToList();
 
-                    DictionaryMot = DbGovMishkunList.ToDictionary(x => x.MishkunId, x => x);
+                    DictionaryMot = DbGovMishkunList.ToDictionary(x => x._id, x => x);
 
                     // מגיע מcsv  
                     if (!string.IsNullOrEmpty(CsvLink))
@@ -448,6 +448,7 @@ namespace GovAPI
                             GovMishkun GovMishkunFromGov = new GovMishkun();
 
                             GovMishkunFromGov.MishkunId = Helper.ConvertToInt(x["מזהה משכון"].ToString());
+                            GovMishkunFromGov._id = Helper.ConvertToInt(x["_id"].ToString());
                             GovMishkunFromGov.DateRegister = Helper.ConvertToDatetime(x["תאריך רישום"].ToString());
                             GovMishkunFromGov.StatusRegister = x["סטטוס רישום"].ToString();
                             GovMishkunFromGov.DateStatusRegister = x["תאריך סיבת סטטוס"].ToString();
@@ -514,7 +515,7 @@ namespace GovAPI
             GovMishkun CurrentCarInDB;//   .Where(m => m.mispar_rechev == GovMishkunObj.mispar_rechev).FirstOrDefault();
 
 
-            DictionaryMot.TryGetValue(GovMishkunObj.MishkunId,out CurrentCarInDB);
+            DictionaryMot.TryGetValue(GovMishkunObj._id,out CurrentCarInDB);
            
             //רכב חדש
             if (CurrentCarInDB == null)
@@ -522,7 +523,7 @@ namespace GovAPI
                 // Context.GovMishkun.Add(GovMishkunObj);
                 GovMishkunNewList.Add(GovMishkunObj);
                 TotalAddNewCar++;
-                Console.WriteLine("13)" + TotalRowOver.ToString() + "." + " Add New - " + GovMishkunObj.MishkunId);
+                Console.WriteLine("13)" + TotalRowOver.ToString() + "." + " Add New - " + GovMishkunObj._id);
 
                 return;
             }

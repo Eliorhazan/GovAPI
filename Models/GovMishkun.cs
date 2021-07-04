@@ -8,7 +8,7 @@ namespace GovAPI
     {
         [Key]
         public int Id { get; set; }
-    
+        public int _id { get; set; }
         public int MishkunId { get; set; }
 
         public DateTime? DateRegister { get; set; }

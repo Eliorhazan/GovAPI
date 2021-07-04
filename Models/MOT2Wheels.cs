@@ -22,7 +22,7 @@ namespace GovAPI
         public string kod_mehirut_zmig_kidmi { get; set; }
         public string kod_mehirut_zmig_ahori { get; set; }
         public int? nefach_manoa { get; set; }
-        public float? hespek { get; set; }
+        public double? hespek { get; set; }
         public string misgeret { get; set; }
 
         public int Active { get; set; } =  1;
