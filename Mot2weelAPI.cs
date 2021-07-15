@@ -266,34 +266,63 @@ namespace GovAPI
 
         private void SaveMOTNOTActive()
         {
-         
+
 
             using (var Context = new Context())
             {
 
 
-              
+
                 Context.Configuration.AutoDetectChangesEnabled = false;
                 Context.Configuration.ValidateOnSaveEnabled = false;
 
-                foreach (var item in DictionaryMotFromGovOrCsv)
+
+                var ListNotActive = DbMOT2WheelsList.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.mispar_rechev)).ToList();
+
+                foreach (var CurrentCarInDB in ListNotActive)
                 {
+                    CurrentCarInDB.Active = -1;
+                    Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
 
-                    MOT2Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT2WheelsObj.mispar_rechev).FirstOrDefault();
-                    DictionaryMot.TryGetValue(item, out CurrentCarInDB);
-
-                    if (CurrentCarInDB == null)
-                    {
-                        CurrentCarInDB.Active = -1;
-                        Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
-                    }
                 }
 
 
+
                 Context.SaveChanges();
-               
+
 
             }
+
+
+
+
+
+            //using (var Context = new Context())
+            //{
+
+
+
+            //    Context.Configuration.AutoDetectChangesEnabled = false;
+            //    Context.Configuration.ValidateOnSaveEnabled = false;
+
+            //    foreach (var item in DictionaryMotFromGovOrCsv)
+            //    {
+
+            //        MOT2Wheels CurrentCarInDB;//   .Where(m => m.mispar_rechev == MOT2WheelsObj.mispar_rechev).FirstOrDefault();
+            //        DictionaryMot.TryGetValue(item, out CurrentCarInDB);
+
+            //        if (CurrentCarInDB == null)
+            //        {
+            //            CurrentCarInDB.Active = -1;
+            //            Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+            //        }
+            //    }
+
+
+            //    Context.SaveChanges();
+
+
+            //}
 
         }
 
