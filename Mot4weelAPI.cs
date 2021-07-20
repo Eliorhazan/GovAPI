@@ -176,15 +176,17 @@ namespace GovAPI
 
                                 SaveMOT4WheelsNewList();
                                 SaveMOT4WheelsChangeList();
-                               
+                                //למחוק
+                                SaveMOTNOTActive();
+
+
                                 allIputParams.RemoveAll(x => x.Key == "offset");
                                 allIputParams.Add(new KeyValuePair<string, string>("offset", CountOffset.ToString()));
 
                                 requestParams = new FormUrlEncodedContent(allIputParams).ReadAsStringAsync().Result;
                                 // Call REST Web API with parameters.  
                                 responseObj = GetInfo(requestParams, Context).Result;
-
-                           
+                             
                                 if (responseObj == -1)
                                 {
                                     responseObj = 2;
@@ -265,15 +267,17 @@ namespace GovAPI
 
         }
 
+
+        //https://stackoverflow.com/questions/5940225/fastest-way-of-inserting-in-entity-framework
         private void SaveMOTNOTActive()
         {
 
 
 
-            using (var Context = new Context())
-            {
+            //using (var Context = new Context())
+            //{
 
-
+                var Context = new Context();
 
                 Context.Configuration.AutoDetectChangesEnabled = false;
                 Context.Configuration.ValidateOnSaveEnabled = false;
@@ -281,23 +285,33 @@ namespace GovAPI
 
 
                
-
+                
 
                 var ListNotActive = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key)).ToList();
 
+
+
+
+                int count = 0;
                 foreach (var CurrentCarInDB in ListNotActive)
                 {
+                    ++count;
                     CurrentCarInDB.Value.Active = -1;
-                    Context.Entry(CurrentCarInDB.Value).State = System.Data.Entity.EntityState.Modified;
-
+                    Context = AddToContext(Context, CurrentCarInDB.Value, count, 100, true);
                 }
+                //foreach (var CurrentCarInDB in ListNotActive)
+                //{
+                //    CurrentCarInDB.Value.Active = -1;
+                //  //  Context.Entry(CurrentCarInDB.Value).State = System.Data.Entity.EntityState.Modified;
+
+                //}
               
 
 
                 Context.SaveChanges();
 
 
-            }
+          //  }
 
             //using (var Context = new Context())
             //{
@@ -326,6 +340,26 @@ namespace GovAPI
 
             //}
 
+        }
+
+    //    private MyDbContext AddToContext(MyDbContext context,
+    //Entity entity, int count, int commitCount, bool recreateContext)
+        private Context AddToContext(Context context, MOT4Wheels entity, int count, int commitCount, bool recreateContext)
+        {
+            context.Set<MOT4Wheels>().Attach(entity);
+
+            if (count % commitCount == 0)
+            {
+                context.SaveChanges();
+                if (recreateContext)
+                {
+                    context.Dispose();
+                    context = new Context();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                }
+            }
+
+            return context;
         }
 
         private void SaveMOT4WheelsNewList()
