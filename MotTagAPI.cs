@@ -215,11 +215,11 @@ namespace GovAPI
                 Context.Configuration.ValidateOnSaveEnabled = false;
 
 
-                var ListNotActive = DbMOTTagsList.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.MISPAR_RECHEV)).ToList();
+                var ListNotActive = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key)).ToList();
 
                 foreach (var CurrentCarInDB in ListNotActive)
                 {
-                    CurrentCarInDB.Active = false;
+                    CurrentCarInDB.Value.Active = false;
                     Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
 
                 }

@@ -176,7 +176,7 @@ namespace GovAPI
 
                                 SaveMOT4WheelsNewList();
                                 SaveMOT4WheelsChangeList();
-
+                               
                                 allIputParams.RemoveAll(x => x.Key == "offset");
                                 allIputParams.Add(new KeyValuePair<string, string>("offset", CountOffset.ToString()));
 
@@ -184,6 +184,7 @@ namespace GovAPI
                                 // Call REST Web API with parameters.  
                                 responseObj = GetInfo(requestParams, Context).Result;
 
+                           
                                 if (responseObj == -1)
                                 {
                                     responseObj = 2;
@@ -278,12 +279,16 @@ namespace GovAPI
                 Context.Configuration.ValidateOnSaveEnabled = false;
 
 
-                var ListNotActive = DbMOT4WheelsList.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.mispar_rechev)).ToList();
+
+               
+
+
+                var ListNotActive = DictionaryMot.Where(x => !DictionaryMotFromGovOrCsv.Contains(x.Key)).ToList();
 
                 foreach (var CurrentCarInDB in ListNotActive)
                 {
-                    CurrentCarInDB.Active = -1;
-                    Context.Entry(CurrentCarInDB).State = System.Data.Entity.EntityState.Modified;
+                    CurrentCarInDB.Value.Active = -1;
+                    Context.Entry(CurrentCarInDB.Value).State = System.Data.Entity.EntityState.Modified;
 
                 }
               
